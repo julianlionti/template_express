@@ -19,8 +19,10 @@ const validarNuevo: any = [
   }),
 ]
 
-const nuevo = (req: Request, res: Response) => {
-  res.json({})
+const nuevo = async (req: Request, res: Response) => {
+  const {nombre, apellido, usuario, dni, mail} = req.body
+  const nuevo = await Usuario.create({nombre, apellido, usuario, dni, mail})
+  res.json({usuario: nuevo.toJSON()})
 }
 
 export default {

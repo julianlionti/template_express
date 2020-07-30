@@ -3,22 +3,19 @@ import chai from 'chai'
 import chaiHttp from 'chai-http'
 import {assertErrors, assertError} from './helpers/asserts'
 import ErrorProductor from '../errors/Productor'
-import Productor, {ProductorProps} from '../model/Productor'
-import {limpiarBase} from './helpers/database'
+import {limpiarBase, llenarbase, BaseProps} from './helpers/database'
 import {crearProductor} from './helpers/generadores'
 import dictum from 'dictum.js'
 
 chai.use(chaiHttp)
 const {request} = chai
 
-let fakeData: {Productor: ProductorProps[]} = {Productor: []}
-
 describe('productor', () => {
+  let fakeData: BaseProps
+
   beforeEach(async () => {
     await limpiarBase()
-
-    fakeData.Productor = [crearProductor(), crearProductor()]
-    fakeData.Productor.map((e) => Productor.create(e))
+    fakeData = await llenarbase()
   })
 
   describe('POST /api/productor', () => {
@@ -50,13 +47,14 @@ describe('productor', () => {
     })
 
     describe('mandando duplicado dni', () => {
-      it('debería devolver error', (done) => {
+      it('debería devolver error', async () => {
+        const [prodDup] = fakeData.productores
+        const {dni} = (await prodDup).toJSON()
         request(app)
           .post('/api/productor/nuevo')
-          .send({...crearProductor(), dni: fakeData.Productor[0].dni})
+          .send({...crearProductor(), dni})
           .end((_, res) => {
             assertError(res, ErrorProductor.DniDuplicado)
-            done()
           })
       })
     })

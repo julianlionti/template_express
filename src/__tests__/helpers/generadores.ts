@@ -17,7 +17,7 @@ export const crearProductor = (): ProductorProps => ({
 export const crearUsuario = (): UsuarioProps => {
   const nombre = faker.name.firstName()
   const apellido = faker.name.lastName()
-  const usuario = nombre.substring(1) + apellido
+  const usuario = (nombre.substring(0, 1) + apellido).toLocaleLowerCase()
   return {
     nombre,
     apellido,

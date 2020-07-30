@@ -11,6 +11,6 @@ export default {
   SinApellido: agregar(crearBody('apellido', codigo).exists()),
   SinDNI: agregar(crearBody('dni', codigo).exists()),
   SinUsuario: agregar(crearBody('usuario', codigo).exists()),
-  UsuarioDuplicado: agregar(crearCheck('dni', 'El Dni está duplicado', codigo)),
-  DniDuplicado: agregar(crearCheck('usuario', 'El Usuario está duplicado', codigo)),
+  UsuarioDuplicado: agregar(crearCheck('usuario', 'El Dni está duplicado', codigo)),
+  DniDuplicado: agregar(crearCheck('dni', 'El Usuario está duplicado', codigo)),
 }

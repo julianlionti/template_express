@@ -21,4 +21,8 @@ var schema = new Schema<UsuarioProps>({
   admin: Boolean,
 })
 
+schema.set('toJSON', {
+  transform: (doc, {_id, __v, ...restDoc}) => restDoc,
+})
+
 export default mongoose.model('Usuario', schema)

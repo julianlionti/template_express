@@ -19,4 +19,8 @@ var schema = new Schema<ProductorProps>({
   lng: Number,
 })
 
+schema.set('toJSON', {
+  transform: (doc, {_id, __v, ...restDoc}) => restDoc,
+})
+
 export default mongoose.model('Productor', schema)
