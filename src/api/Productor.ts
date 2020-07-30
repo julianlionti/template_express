@@ -1,11 +1,7 @@
 import {Request, Response} from 'express'
-import jwt from 'jwt-simple'
-import moment from 'moment'
 import Errores from '../errors/Productor'
-
 import Productor from '../model/Productor'
-import Config from '../util/Config'
-import {check} from 'express-validator'
+import {generarToken} from '../helpers/auth'
 
 const validacionesNuevo = [
   Errores.SinNombre,
@@ -17,17 +13,6 @@ const validacionesNuevo = [
     }
   }),
 ]
-
-const generarToken = (id: string) => {
-  return jwt.encode(
-    {
-      sub: id,
-      iat: moment().unix(),
-      exp: moment().add(14, 'days').unix(),
-    },
-    Config.SECRETA!!,
-  )
-}
 
 const nuevo = async (req: Request, res: Response) => {
   const {nombre, apellido, dni} = req.body

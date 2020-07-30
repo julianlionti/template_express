@@ -16,5 +16,5 @@ export const errorPresent = (req: Request, res: Response) => {
     const [primero] = arr
     return error(res, primero)
   }
-  return res.status(400).json({errores: arr})
+  return res.status(400).json({errores: arr.sort((a, b) => a.codigo - b.codigo)})
 }

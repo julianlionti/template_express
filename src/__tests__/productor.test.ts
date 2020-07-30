@@ -9,7 +9,7 @@ import {crearProductor} from './helpers/generadores'
 import dictum from 'dictum.js'
 
 chai.use(chaiHttp)
-const {expect, request} = chai
+const {request} = chai
 
 let fakeData: {Productor: ProductorProps[]} = {Productor: []}
 
@@ -18,12 +18,11 @@ describe('productor', () => {
     await limpiarBase()
 
     fakeData.Productor = [crearProductor(), crearProductor()]
-
     fakeData.Productor.map((e) => Productor.create(e))
   })
 
   describe('POST /api/productor', () => {
-    describe('mandando mal los parametros', () => {
+    describe('sin mandar parametros', () => {
       it('debería devolver error', (done) => {
         request(app)
           .post('/api/productor/nuevo')
@@ -44,7 +43,6 @@ describe('productor', () => {
           .post('/api/productor/nuevo')
           .send(crearProductor())
           .end(async (_, res) => {
-            // const res.body
             await dictum.chai(res, 'Crea un nuevo productor')
             done()
           })

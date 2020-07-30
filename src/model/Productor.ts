@@ -5,11 +5,12 @@ export interface ProductorProps {
   nombre: string
   apellido: string
   dni: string
+  token?: string
   lat?: number
   lng?: number
 }
 
-var productorSchema = new Schema<ProductorProps>({
+var schema = new Schema<ProductorProps>({
   nombre: {type: String, required: true, index: true},
   apellido: {type: String, required: true, index: true},
   dni: {type: String, required: true, index: true, unique: true},
@@ -18,4 +19,4 @@ var productorSchema = new Schema<ProductorProps>({
   lng: Number,
 })
 
-export default mongoose.model('Productor', productorSchema)
+export default mongoose.model('Productor', schema)

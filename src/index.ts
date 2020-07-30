@@ -22,6 +22,7 @@ app.use('/api', routes())
 
 app.listen(Config.PORT, () => {
   console.log('Servidor iniciado en ' + Config.PORT)
+  console.log(Config.NODE_ENV)
 })
 
 export default app
