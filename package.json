@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "node -r esm src",
+    "start": "ts-node src",
     "dev": "npx nodemon",
     "build": "yarn test & npx tsc",
     "test": "cross-env NODE_ENV=test ts-mocha -p tsconfig.json src/**/*.test.ts -t 30000 --exit"
