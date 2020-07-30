@@ -1,0 +1,43 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node -r esm src",
+    "dev": "npx nodemon",
+    "build": "npx tsc",
+    "test": "cross-env NODE_ENV=test ts-mocha -p tsconfig.json src/**/*.test.ts -t 30000 --exit"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.0",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.7",
+    "@types/mocha": "^8.0.0",
+    "@types/mongoose": "^5.7.34",
+    "@types/node": "^14.0.27",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.2",
+    "dictum.js": "^1.0.4",
+    "mocha": "^8.0.1",
+    "ts-mocha": "^7.0.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@types/chai": "^4.2.12",
+    "@types/faker": "^4.1.12",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "faker": "^4.1.0",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.26"
+  }
+}
