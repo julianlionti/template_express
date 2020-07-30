@@ -12,5 +12,9 @@ export const errorPresent = (req: Request, res: Response) => {
   }
 
   const arr = errors.array().map((e) => ({...e.msg}))
+  if (arr.length === 1) {
+    const [primero] = arr
+    return error(res, primero)
+  }
   return res.status(400).json({errores: arr})
 }

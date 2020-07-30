@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 var Schema = mongoose.Schema
 
-export interface Productor {
+export interface ProductorProps {
   nombre: string
   apellido: string
   dni: string
@@ -9,10 +9,10 @@ export interface Productor {
   lng?: number
 }
 
-var productorSchema = new Schema<Productor>({
+var productorSchema = new Schema<ProductorProps>({
   nombre: {type: String, required: true, index: true},
   apellido: {type: String, required: true, index: true},
-  dni: {type: String, required: true, index: true},
+  dni: {type: String, required: true, index: true, unique: true},
   token: String,
   lat: Number,
   lng: Number,

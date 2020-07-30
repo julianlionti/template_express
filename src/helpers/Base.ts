@@ -1,12 +1,8 @@
 import {errorPresent} from './errors'
 import {NextFunction, Request, Response} from 'express'
 
-type ErrorHandlerProps = (req: Request, res: Response, next: NextFunction) => void
-const execute = (fx: ErrorHandlerProps) => async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+type FxProps = (req: Request, res: Response, next: NextFunction) => void
+const execute = (fx: FxProps) => async (req: Request, res: Response, next: NextFunction) => {
   try {
     const error = errorPresent(req, res)
     if (error) return error

@@ -5,8 +5,18 @@ import Errores from '../errors/Productor'
 
 import Productor from '../model/Productor'
 import Config from '../util/Config'
+import {check} from 'express-validator'
 
-const validacionesNuevo = [Errores.SinNombre, Errores.SinApellido, Errores.SinDNI]
+const validacionesNuevo = [
+  Errores.SinNombre,
+  Errores.SinApellido,
+  Errores.SinDNI,
+  Errores.DniDuplicado.custom(async (val) => {
+    if (await Productor.findOne({dni: val})) {
+      return Promise.reject()
+    }
+  }),
+]
 
 const generarToken = (id: string) => {
   return jwt.encode(

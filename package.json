@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node -r esm src",
     "dev": "npx nodemon",
-    "build": "npx tsc",
+    "build": "yarn test & npx tsc",
     "test": "cross-env NODE_ENV=test ts-mocha -p tsconfig.json src/**/*.test.ts -t 30000 --exit"
   },
   "devDependencies": {

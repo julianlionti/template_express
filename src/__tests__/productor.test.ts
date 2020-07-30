@@ -1,18 +1,25 @@
 import app from '../index'
 import chai from 'chai'
 import chaiHttp from 'chai-http'
-import {assertErrors} from './helpers/asserts'
-import Productor from '../errors/Productor'
+import {assertErrors, assertError} from './helpers/asserts'
+import ErrorProductor from '../errors/Productor'
+import Productor, {ProductorProps} from '../model/Productor'
 import {limpiarBase} from './helpers/database'
-import {productor} from './helpers/generadores'
+import {crearProductor} from './helpers/generadores'
 import dictum from 'dictum.js'
 
 chai.use(chaiHttp)
 const {expect, request} = chai
 
+let fakeData: {Productor: ProductorProps[]} = {Productor: []}
+
 describe('productor', () => {
   beforeEach(async () => {
     await limpiarBase()
+
+    fakeData.Productor = [crearProductor(), crearProductor()]
+
+    fakeData.Productor.map((e) => Productor.create(e))
   })
 
   describe('POST /api/productor', () => {
@@ -21,7 +28,11 @@ describe('productor', () => {
         request(app)
           .post('/api/productor/nuevo')
           .end((_, res) => {
-            assertErrors(res, [Productor.SinApellido, Productor.SinNombre, Productor.SinDNI])
+            assertErrors(res, [
+              ErrorProductor.SinApellido,
+              ErrorProductor.SinNombre,
+              ErrorProductor.SinDNI,
+            ])
             done()
           })
       })
@@ -31,9 +42,22 @@ describe('productor', () => {
       it('debería devolver el prodcutor', (done) => {
         request(app)
           .post('/api/productor/nuevo')
-          .send(productor)
+          .send(crearProductor())
+          .end(async (_, res) => {
+            // const res.body
+            await dictum.chai(res, 'Crea un nuevo productor')
+            done()
+          })
+      })
+    })
+
+    describe('mandando duplicado dni', () => {
+      it('debería devolver error', (done) => {
+        request(app)
+          .post('/api/productor/nuevo')
+          .send({...crearProductor(), dni: fakeData.Productor[0].dni})
           .end((_, res) => {
-            dictum.chai(res, 'Crea un nuevo productor')
+            assertError(res, ErrorProductor.DniDuplicado)
             done()
           })
       })
